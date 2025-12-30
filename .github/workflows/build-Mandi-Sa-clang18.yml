@@ -36,7 +36,8 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang-mandi-sa
-        git clone https://codeberg.org/Mandi-Sa/clang --depth=1 -b amd64-kernel-arm clang-mandi-sa
+        git clone https://github.com/kdrag0n/proton-clang --depth=1
+        # git clone https://codeberg.org/Mandi-Sa/clang --depth=1 -b amd64-kernel-arm clang-mandi-sa
         
                
     - name: 下载内核源码
@@ -98,7 +99,8 @@ jobs:
     - name: 开始编译内核
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-mandi-sa/bin:$PATH
+        # export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-mandi-sa/bin:$PATH
+        export PATH=$GITHUB_WORKSPACE/kernel_workspace/proton-clang/bin:$PATH
         export KBUILD_BUILD_HOST=17
         export KBUILD_BUILD_USER=HyperPower
         make -s -j$(nproc --all) O=out ARCH=arm64 ${{ env.KERNEL_CONFIG }}
