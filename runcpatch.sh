@@ -57,6 +57,13 @@ if ! grep -q "cgroup_namespace_create" "$CGROUP_FILE"; then
 /*
  * RUNC support patches
  */
+
+ /* Minimal RUNC support for Linux 4.4 */
+struct cgroup_namespace {
+struct cgroup_root *root; /* back-reference to cgroup root */ 
+atomic_t count; /* reference counter */ 
+};
+ 
 #ifdef CONFIG_USER_NS
 static struct cgroup_namespace *cgroup_namespace_create(struct cgroup *cgroup)
 {
