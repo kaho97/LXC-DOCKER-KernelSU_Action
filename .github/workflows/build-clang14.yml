@@ -53,17 +53,17 @@ jobs:
         bash "$GITHUB_WORKSPACE/add-lxc-docker-custom.sh" "android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}"
         echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> "android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}"
 
-    - name: 添加runc补丁
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace
-        # wget https://github.com/fate-think/LXC-DOCKER-KernelSU_Action/releases/download/1.0.0/runcpatch.sh
-        chmod a+x $GITHUB_WORKSPACE/runcpatch.sh
-        if [ -f android-kernel/kernel/cgroup.c ]; then
-        bash "$GITHUB_WORKSPACE/runcpatch.sh" android-kernel/kernel/cgroup.c              
-        fi
-        if [ -f android-kernel/kernel/cgroup/cgroup.c ]; then
-        bash "$GITHUB_WORKSPACE/runcpatch.sh" android-kernel/kernel/cgroup/cgroup.c              
-        fi
+    # - name: 添加runc补丁
+    #   run: |
+    #     cd $GITHUB_WORKSPACE/kernel_workspace
+    #     # wget https://github.com/fate-think/LXC-DOCKER-KernelSU_Action/releases/download/1.0.0/runcpatch.sh
+    #     chmod a+x $GITHUB_WORKSPACE/runcpatch.sh
+    #     if [ -f android-kernel/kernel/cgroup.c ]; then
+    #     bash "$GITHUB_WORKSPACE/runcpatch.sh" android-kernel/kernel/cgroup.c              
+    #     fi
+    #     if [ -f android-kernel/kernel/cgroup/cgroup.c ]; then
+    #     bash "$GITHUB_WORKSPACE/runcpatch.sh" android-kernel/kernel/cgroup/cgroup.c              
+    #     fi
         
     - name: 配置 ksu
       if: env.ENABLE_KERNELSU == 'true'
@@ -71,20 +71,20 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
 
-    - name: 开启kvm
-      if: env.ENABLE_KVM == 'true'
-      run: |
-         cd $GITHUB_WORKSPACE/kernel_workspace
-         echo "CONFIG_VIRTUALIZATION=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
-         echo "CONFIG_KVM=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
-         echo "CONFIG_VHOST_NET=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
-         echo "CONFIG_VHOST_CROSS_ENDIAN_LEGACY=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
+    # - name: 开启kvm
+    #   if: env.ENABLE_KVM == 'true'
+    #   run: |
+    #      cd $GITHUB_WORKSPACE/kernel_workspace
+    #      echo "CONFIG_VIRTUALIZATION=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
+    #      echo "CONFIG_KVM=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
+    #      echo "CONFIG_VHOST_NET=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
+    #      echo "CONFIG_VHOST_CROSS_ENDIAN_LEGACY=y" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
                 
-    - name: 设置ccache缓存
-      uses: hendrikmuhs/ccache-action@v1.2
-      with:
-        key: build-kernel-mido-kernel
-        max-size: 2G
+    # - name: 设置ccache缓存
+    #   uses: hendrikmuhs/ccache-action@v1.2
+    #   with:
+    #     key: build-kernel-mido-kernel
+    #     max-size: 2G
 
     - name: 开始编译内核
       run: |
