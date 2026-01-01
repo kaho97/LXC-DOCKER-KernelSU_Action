@@ -69,8 +69,7 @@ jobs:
       if: env.ENABLE_KERNELSU == 'true'
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        make KCFLAGS="-Wno-error=incompatible-pointer-types-discards-qualifiers" \
-        curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s legacy
+        curl -LSs "https://raw.githubusercontent.com/kaho97/KernelSU-Next/legacy/kernel/setup.sh" | bash -s legacy
 
     # - name: 开启kvm
     #   if: env.ENABLE_KVM == 'true'
