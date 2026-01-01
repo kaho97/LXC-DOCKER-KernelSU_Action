@@ -65,11 +65,11 @@ jobs:
     #     bash "$GITHUB_WORKSPACE/runcpatch.sh" android-kernel/kernel/cgroup/cgroup.c              
     #     fi
         
-    # - name: 配置 ksu
-    #   if: env.ENABLE_KERNELSU == 'true'
-    #   run: |
-    #     cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-    #     curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
+    - name: 配置 ksu
+      if: env.ENABLE_KERNELSU == 'true'
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
 
     # - name: 开启kvm
     #   if: env.ENABLE_KVM == 'true'
